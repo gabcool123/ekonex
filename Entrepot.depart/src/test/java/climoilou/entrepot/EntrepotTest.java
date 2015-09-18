@@ -18,6 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import climoilou.entrepot.items.Boite;
+import climoilou.entrepot.items.Commande;
 import climoilou.entrepot.items.Item;
 import climoilou.entrepot.items.TypeItem;
 
@@ -69,8 +70,8 @@ public class EntrepotTest {
 	public void ConstructorGrandeSectionTest() {
 		Entrepot entrepot = new Entrepot();
 
-		//TODO assurez-vous que l'entrepot contient toutes les éléments nécessaires
-		// Ajoutez au besoin les accesseurs nécessaires dans la classe entrepôt.
+		assertTrue(boite1.getNomDeProduit().equals("boite1"));
+		assertTrue(item2.getUID() == 2);
 	}
 
 	@Test
@@ -122,7 +123,7 @@ public class EntrepotTest {
 
 		entrepot.commandeItem(boite1, boite4);
 
-		//TODO  Assurez-vous que tout est conforme
+		assertTrue();
 	}
 	
 	@Test 

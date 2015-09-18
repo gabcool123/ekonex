@@ -1,14 +1,26 @@
 package climoilou.entrepot;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
+import java.util.TreeSet;
 
+import climoilou.entrepot.items.Boite;
 import climoilou.entrepot.items.Item;
 import climoilou.entrepot.items.Item.Where;
+import climoilou.entrepot.items.TypeItem;
 
 public class Entrepot {
 
@@ -22,19 +34,27 @@ public class Entrepot {
 
 	// list, stack, queue, deque, map, set,
 	// Les collections utilisées dans le projet d'entrepôt
-	private List<Item> grandeEtageres; // TODO choisir le type
-	private Stack<Item> petiteEtagere;// TODO choisir le type
+	private Map<TypeItem, Map<Character ,List<Boite>>> grandeEtageres; // TODO choisir le type
+	private Map<String ,Stack<Item>> petiteEtagere;// TODO choisir le type
 	
 	private Set<Item> surplus;
 	private Queue<Item> sectionDechargement;
 	private Queue<Item> sectionExpedition;
+	
+	
 
 	public Entrepot() {
-		super();
-		// Allouez les différentes sections de l'entrepôt.
-		// ATTENTION: les sections de la petite étagère (par nom de fabriquant)
+		// Allouez les difféentes sections de l'entrepôt.
+		// ATTENTION: les section de la petite étagère (par nom de fabriquant)
 		// sont allouées au besoin (lazy).
+		super();
+		
+		grandeEtageres = new HashMap<TypeItem, Map<Character ,List<Boite>>>();
+		surplus = new HashSet<Item>();
+		sectionDechargement = new LinkedList<Item>();
+		sectionExpedition = new LinkedList<Item>();
 	}
+		
 
 	@Override
 	public String toString() {
@@ -57,15 +77,21 @@ public class Entrepot {
 	 * @return le nom du fichier utilisé pour la sérialisation
 	 */
 	public String expedie() {
-	String fileName = null;
+		String fileName = null;
+		int numFichier = 0;
 		
 		try
 		{
-			while (fileName)
-			fileName = HISTORY_EXPEDITION_FILE_NAME + HISTORY_FILE_EXT;
+			fileName = ("%sytem root%\\Temp\\" + HISTORY_EXPEDITION_FILE_NAME + numFichier + HISTORY_FILE_EXT);
+			File file = new File(fileName);
+			
+			while (file.exists())
+			{
+				fileName = ("%sytem root%\\Temp\\" + HISTORY_EXPEDITION_FILE_NAME + (numFichier++) + HISTORY_FILE_EXT);
+			}
 			
 			
-			FileOutputStream fos = new FileOutputStream("D:\\DEC\\TP1\\Entrepot.depart\\données\\" + fileName);
+			FileOutputStream fos = new FileOutputStream("%System root%\\Temp\\" + fileName);
 			BufferedOutputStream bos = new BufferedOutputStream(fos);
 			ObjectOutputStream oos = new ObjectOutputStream(bos);
 			
@@ -117,7 +143,8 @@ public class Entrepot {
 	public void commandeItem(Item... items) {
 		// TODO On marque les items pour la commande
 		// la date actuelle sert automatiquement de date de commande
-
+		System.out.println(items.length);
+		
 	}
 
 	/**
@@ -137,10 +164,11 @@ public class Entrepot {
 	 * Place les items marqués pour la commande dans la file de l'expédition.
 	 */
 	private void prepareExpedition() {
-		//TODO programmer cette méthode
-		// ATTENTION à n'utilisez que les méthodes permise avec la pile
-
-
+		
+		for (Boite it : grandeEtageres)
+		{
+			
+		}
 	}
 
 	/**
