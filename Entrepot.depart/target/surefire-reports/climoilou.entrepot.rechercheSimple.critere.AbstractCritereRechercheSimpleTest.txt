@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: climoilou.entrepot.rechercheSimple.critere.AbstractCritereRechercheSimpleTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.025 sec - in climoilou.entrepot.rechercheSimple.critere.AbstractCritereRechercheSimpleTest

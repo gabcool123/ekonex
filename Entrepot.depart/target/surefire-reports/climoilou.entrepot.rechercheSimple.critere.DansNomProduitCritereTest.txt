@@ -1,0 +1,10 @@
+-------------------------------------------------------------------------------
+Test set: climoilou.entrepot.rechercheSimple.critere.DansNomProduitCritereTest
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.009 sec <<< FAILURE! - in climoilou.entrepot.rechercheSimple.critere.DansNomProduitCritereTest
+getElementTrouveTest(climoilou.entrepot.rechercheSimple.critere.DansNomProduitCritereTest)  Time elapsed: 0.008 sec  <<< ERROR!
+java.lang.NullPointerException: null
+	at climoilou.entrepot.util.ChargeurDeDonnees.getResourcePath(ChargeurDeDonnees.java:55)
+	at climoilou.entrepot.util.ChargeurDeDonnees.charger(ChargeurDeDonnees.java:32)
+	at climoilou.entrepot.rechercheSimple.critere.DansNomProduitCritereTest.setUp(DansNomProduitCritereTest.java:35)
+

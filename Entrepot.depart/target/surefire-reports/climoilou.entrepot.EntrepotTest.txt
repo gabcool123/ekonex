@@ -1,0 +1,34 @@
+-------------------------------------------------------------------------------
+Test set: climoilou.entrepot.EntrepotTest
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 0, Errors: 6, Skipped: 0, Time elapsed: 0.215 sec <<< FAILURE! - in climoilou.entrepot.EntrepotTest
+ajoutePlusieursItemTest(climoilou.entrepot.EntrepotTest)  Time elapsed: 0.076 sec  <<< ERROR!
+java.lang.NullPointerException: null
+	at climoilou.entrepot.Entrepot.ajouteItems(Entrepot.java:74)
+	at climoilou.entrepot.EntrepotTest.ajoutePlusieursItemTest(EntrepotTest.java:114)
+
+traiteEntrepotFunctionalTest(climoilou.entrepot.EntrepotTest)  Time elapsed: 0.002 sec  <<< ERROR!
+java.lang.NullPointerException: null
+	at climoilou.entrepot.Entrepot.ajouteItems(Entrepot.java:74)
+	at climoilou.entrepot.EntrepotTest.traiteEntrepotFunctionalTest(EntrepotTest.java:143)
+
+getToutItemDansEntrepotTest(climoilou.entrepot.EntrepotTest)  Time elapsed: 0.001 sec  <<< ERROR!
+java.lang.NullPointerException: null
+	at climoilou.entrepot.Entrepot.ajouteItems(Entrepot.java:74)
+	at climoilou.entrepot.EntrepotTest.getToutItemDansEntrepotTest(EntrepotTest.java:132)
+
+ajouteTroisItemTest(climoilou.entrepot.EntrepotTest)  Time elapsed: 0.003 sec  <<< ERROR!
+java.lang.NullPointerException: null
+	at climoilou.entrepot.Entrepot.ajouteItems(Entrepot.java:74)
+	at climoilou.entrepot.EntrepotTest.ajouteTroisItemTest(EntrepotTest.java:103)
+
+ajouteUnItemTest(climoilou.entrepot.EntrepotTest)  Time elapsed: 0.001 sec  <<< ERROR!
+java.lang.NullPointerException: null
+	at climoilou.entrepot.Entrepot.ajouteItems(Entrepot.java:74)
+	at climoilou.entrepot.EntrepotTest.ajouteUnItemTest(EntrepotTest.java:89)
+
+expedieTest(climoilou.entrepot.EntrepotTest)  Time elapsed: 0.002 sec  <<< ERROR!
+java.lang.NullPointerException: null
+	at climoilou.entrepot.Entrepot.ajouteItems(Entrepot.java:74)
+	at climoilou.entrepot.EntrepotTest.expedieTest(EntrepotTest.java:167)
+

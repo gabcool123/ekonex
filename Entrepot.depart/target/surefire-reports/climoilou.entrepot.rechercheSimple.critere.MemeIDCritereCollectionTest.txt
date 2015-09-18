@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: climoilou.entrepot.rechercheSimple.critere.MemeIDCritereCollectionTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.06 sec <<< FAILURE! - in climoilou.entrepot.rechercheSimple.critere.MemeIDCritereCollectionTest
+getElementTrouveTest(climoilou.entrepot.rechercheSimple.critere.MemeIDCritereCollectionTest)  Time elapsed: 0.036 sec  <<< FAILURE!
+java.lang.AssertionError: negativeuid
+	at climoilou.entrepot.rechercheSimple.critere.MemeIDCritereCollection.<init>(MemeIDCritereCollection.java:26)
+	at climoilou.entrepot.rechercheSimple.critere.MemeIDCritereCollectionTest.getElementTrouveTest(MemeIDCritereCollectionTest.java:66)
+
