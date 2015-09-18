@@ -31,8 +31,8 @@ public class Entrepot {
 
 	public Entrepot() {
 		super();
-		// Allouez les difféentes sections de l'entrepôt.
-		// ATTENTION: les section de la petite étagère (par nom de fabriquant)
+		// Allouez les différentes sections de l'entrepôt.
+		// ATTENTION: les sections de la petite étagère (par nom de fabriquant)
 		// sont allouées au besoin (lazy).
 	}
 
