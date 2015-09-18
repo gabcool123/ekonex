@@ -57,9 +57,35 @@ public class Entrepot {
 	 * @return le nom du fichier utilisé pour la sérialisation
 	 */
 	public String expedie() {
-		String fileName = null;
+	String fileName = null;
 		
-		// TODO programmez cette méthode
+		try
+		{
+			while (fileName)
+			fileName = HISTORY_EXPEDITION_FILE_NAME + HISTORY_FILE_EXT;
+			
+			
+			FileOutputStream fos = new FileOutputStream("D:\\DEC\\TP1\\Entrepot.depart\\données\\" + fileName);
+			BufferedOutputStream bos = new BufferedOutputStream(fos);
+			ObjectOutputStream oos = new ObjectOutputStream(bos);
+			
+			while (sectionExpedition != null)
+			{	
+				oos.writeObject(sectionExpedition.peek());
+				sectionExpedition.poll();	
+			}
+			
+			bos.flush();
+			oos.close();
+		}
+		catch (IOException e)
+		{
+			System.out.println("Sérialisation non effectuée");
+		}
+		
+		System.out.println("Sérialisation réussie");
+		
+		System.exit(0);
 
 		return fileName;
 	}
