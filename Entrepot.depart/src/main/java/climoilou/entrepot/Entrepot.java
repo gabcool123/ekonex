@@ -5,9 +5,12 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -18,6 +21,7 @@ import java.util.Stack;
 import java.util.TreeSet;
 
 import climoilou.entrepot.items.Boite;
+import climoilou.entrepot.items.Commande;
 import climoilou.entrepot.items.Item;
 import climoilou.entrepot.items.Item.Where;
 import climoilou.entrepot.items.TypeItem;
@@ -31,30 +35,31 @@ public class Entrepot {
 	public static final int CAPACITE_MAX_SECTION_PETITE_ETAGERE = 50;
 	public static final String HISTORY_EXPEDITION_FILE_NAME = "expedition";
 	public static final String HISTORY_FILE_EXT = ".ser";
+	/*
+	 * public static final Character [] cle =
+	 * {RANGEE_MIN,'B','C','D','E','F','G','H','I','J','K','L','M','N',
+	 * 'O','P','Q','R','S','T','U','V','W','X','Y',RANGEE_MAX};
+	 */
 
 	// list, stack, queue, deque, map, set,
 	// Les collections utilisées dans le projet d'entrepôt
-	private Map<TypeItem, Map<Character ,List<Boite>>> grandeEtageres; // TODO choisir le type
-	private Map<String ,Stack<Item>> petiteEtagere;// TODO choisir le type
-	
+	private EnumMap<TypeItem, Map<Character[], LinkedList<Item>>> grandeEtageres; // TODO
+	private Map<String, Stack<Item>> petiteEtagere;// TODO choisir le type
+
 	private Set<Item> surplus;
 	private Queue<Item> sectionDechargement;
 	private Queue<Item> sectionExpedition;
-	
-	
 
 	public Entrepot() {
 		// Allouez les difféentes sections de l'entrepôt.
 		// ATTENTION: les section de la petite étagère (par nom de fabriquant)
 		// sont allouées au besoin (lazy).
 		super();
-		
-		grandeEtageres = new HashMap<TypeItem, Map<Character ,List<Boite>>>();
+		grandeEtageres = new EnumMap<TypeItem, Map<Character[], LinkedList<Item>>>(TypeItem.class);
 		surplus = new HashSet<Item>();
 		sectionDechargement = new LinkedList<Item>();
 		sectionExpedition = new LinkedList<Item>();
 	}
-		
 
 	@Override
 	public String toString() {
@@ -79,38 +84,32 @@ public class Entrepot {
 	public String expedie() {
 		String fileName = null;
 		int numFichier = 0;
-		
-		try
-		{
+
+		try {
 			fileName = ("%sytem root%\\Temp\\" + HISTORY_EXPEDITION_FILE_NAME + numFichier + HISTORY_FILE_EXT);
 			File file = new File(fileName);
-			
-			while (file.exists())
-			{
+
+			while (file.exists()) {
 				fileName = ("%sytem root%\\Temp\\" + HISTORY_EXPEDITION_FILE_NAME + (numFichier++) + HISTORY_FILE_EXT);
 			}
-			
-			
+
 			FileOutputStream fos = new FileOutputStream("%System root%\\Temp\\" + fileName);
 			BufferedOutputStream bos = new BufferedOutputStream(fos);
 			ObjectOutputStream oos = new ObjectOutputStream(bos);
-			
-			while (sectionExpedition != null)
-			{	
+
+			while (sectionExpedition != null) {
 				oos.writeObject(sectionExpedition.peek());
-				sectionExpedition.poll();	
+				sectionExpedition.poll();
 			}
-			
+
 			bos.flush();
 			oos.close();
-		}
-		catch (IOException e)
-		{
+		} catch (IOException e) {
 			System.out.println("Sérialisation non effectuée");
 		}
-		
+
 		System.out.println("Sérialisation réussie");
-		
+
 		System.exit(0);
 
 		return fileName;
@@ -130,7 +129,6 @@ public class Entrepot {
 			item.setOu(Where.DECHARGEMENT);
 		}
 		return retVal;
-
 	}
 
 	/**
@@ -141,10 +139,12 @@ public class Entrepot {
 	 *            les items commandés
 	 */
 	public void commandeItem(Item... items) {
-		// TODO On marque les items pour la commande
-		// la date actuelle sert automatiquement de date de commande
+
+		for (Item item : items) {
+			item.setCommande(new Commande());
+		}
 		System.out.println(items.length);
-		
+
 	}
 
 	/**
@@ -164,10 +164,34 @@ public class Entrepot {
 	 * Place les items marqués pour la commande dans la file de l'expédition.
 	 */
 	private void prepareExpedition() {
-		
-		for (Boite it : grandeEtageres)
-		{
-			
+
+		/*
+		 * //Pour chaque type d'items for (TypeItem type :
+		 * grandeEtageres.keySet()){ //On doit rechercher dans les list pour
+		 * trouver les boites marquées
+		 * 
+		 * }
+		 */
+
+		/*for (Item item : grandeEtageres.get(.getNomDeProduit().charAt(0)).get(1)) {
+
+			if (item.getCommande() != null) {
+				Commande commande = item.getCommande();
+				commande.setDateExpedition(new Date());
+				sectionExpedition.offer(item);
+				item.setOu(Where.EXPEDITION);
+				item.getConetenantReference().remove(item);
+			}
+		}*/
+
+		for (Item item : petiteEtagere.get(1)) {
+			if (item.getCommande() != null) {
+				Commande commande = item.getCommande();
+				commande.setDateExpedition(new Date());
+				sectionExpedition.offer(item);
+				item.setOu(Where.EXPEDITION);
+				petiteEtagere.get(item).pop();
+			}
 		}
 	}
 
@@ -176,7 +200,49 @@ public class Entrepot {
 	 * endroit.
 	 */
 	private void videDechargement() {
-		//TODO programmez cette méthode
+		// TODO programmez cette méthode
+
+		for (Item item : sectionDechargement) {
+			System.out.println(item.getClass().getSimpleName());
+			
+			if (item.getClass().getSimpleName().equals("Boite")) {
+				System.out.println("boite");
+				if (item.getType().equals(TypeItem.ARTICLE_CAMPING)) {
+					grandeEtageres.get(TypeItem.ARTICLE_CAMPING).get(item.getNomDeProduit().charAt(0)).add(item);
+					item.setOu(Where.GRANDE_ETAGERE);
+					item.setConetenantReference(grandeEtageres.get(TypeItem.ARTICLE_CAMPING).get(item.getNomDeProduit().charAt(0)));
+					sectionDechargement.poll();
+				}
+
+				else if (item.getType().equals(TypeItem.ARTICLE_SPORT)) {
+					grandeEtageres.get(TypeItem.ARTICLE_SPORT).get(item.getNomDeProduit().charAt(0)).add(item);
+					item.setOu(Where.GRANDE_ETAGERE);
+					sectionDechargement.poll();
+				}
+
+				else {
+					grandeEtageres.get(TypeItem.VETEMENT).get(item.getNomDeProduit().charAt(0)).add(item);
+					item.setOu(Where.GRANDE_ETAGERE);
+					sectionDechargement.poll();
+				}
+			}
+			
+
+			else {
+				if (petiteEtagere.get(item.getFabriquant()).size() <= 50) {
+					petiteEtagere.get(item.getFabriquant()).push(item);
+					item.setOu(Where.PETITE_ETAGERE);
+					sectionDechargement.poll();
+				}
+
+				else {
+					surplus.add(item);
+					item.setOu(Where.SURPLUS);
+				}
+				
+				
+			}
+		}
 
 	}
 
@@ -185,12 +251,10 @@ public class Entrepot {
 	 */
 	public List<Item> getToutItemDansEntrepot() {
 		List<Item> retList = new LinkedList<>();
-		// TODO programmez cette méthode
-
 
 		return retList;
 	}
-	
+
 	/**
 	 * On récupère l'historique correpondant au nom de fichier reçu en
 	 * paramètre. La méthode retourne l'ensemble des items que contient le
@@ -202,7 +266,7 @@ public class Entrepot {
 	 */
 	public static Set<Item> unserializeHistory(String fileName) {
 		Set<Item> retSet = new HashSet<>();
-	
+
 		// TODO programmez cette méthode
 		return retSet;
 	}

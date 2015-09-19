@@ -5,9 +5,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -21,6 +23,7 @@ import climoilou.entrepot.items.Boite;
 import climoilou.entrepot.items.Commande;
 import climoilou.entrepot.items.Item;
 import climoilou.entrepot.items.TypeItem;
+import climoilou.entrepot.items.Item.Where;
 
 public class EntrepotTest {
 	private static Item item1;
@@ -77,6 +80,8 @@ public class EntrepotTest {
 	@Test
 	public void ConstructorSectionGrandeEtagereTest() {
 		Entrepot entrepot = new Entrepot();
+		
+		assertTrue(boite1.getConetenantReference().getClass().getSimpleName().equalsIgnoreCase("grandeEtageres"));
 		//TODO Assurez-vous que la seciton grande étagère est complète
 
 	}
@@ -87,7 +92,10 @@ public class EntrepotTest {
 
 		Item item1 = new Item("item1", 1, "fabA", new Date(0), TypeItem.ARTICLE_CAMPING, 4.0f);
 
-		entrepot.ajouteItems(item1);
+		assertTrue (entrepot.ajouteItems(item1));
+		
+		assertTrue (item1.getOu().equals(Where.DECHARGEMENT));
+		
 		//TODO Assurez-vous que l'item a bien été ajouté.
 
 
@@ -101,7 +109,11 @@ public class EntrepotTest {
 		Item item2 = new Item("item2", 2, "fabA", new Date(10000), TypeItem.ARTICLE_CAMPING, 5.0f);
 		Item item3 = new Item("item3", 3, "fabB", new Date(20000), TypeItem.ARTICLE_CAMPING, 6.0f);
 
-		entrepot.ajouteItems(item1, item2, item3);
+		assertTrue(entrepot.ajouteItems(item1, item2, item3));
+		
+		assertTrue (item1.getOu().equals(Where.DECHARGEMENT));
+		assertTrue (item2.getOu().equals(Where.DECHARGEMENT));
+		assertTrue (item3.getOu().equals(Where.DECHARGEMENT));
 		//TODO  Assurez-vous que tous les items ont été saisis.
 
 	}
@@ -112,8 +124,11 @@ public class EntrepotTest {
 
 		Item items[] = { item1, item2, item3 };
 
-		entrepot.ajouteItems(items);
-
+		assertTrue(entrepot.ajouteItems(items));
+		
+		assertTrue (item1.getOu().equals(Where.DECHARGEMENT));
+		assertTrue (item2.getOu().equals(Where.DECHARGEMENT));
+		assertTrue (item3.getOu().equals(Where.DECHARGEMENT));
 		//TODO  Assurez-vous que tout est conforme
 	}
 
@@ -122,8 +137,14 @@ public class EntrepotTest {
 		Entrepot entrepot = new Entrepot();
 
 		entrepot.commandeItem(boite1, boite4);
-
-		assertTrue();
+		entrepot.commandeItem(boite5);
+		
+		assertTrue(boite1.getCommande() != null);
+		assertTrue(boite4.getCommande() != null);
+		assertTrue(boite5.getCommande() != null);
+		
+		assertTrue(boite2.getCommande() == null);
+		assertTrue(boite3.getCommande() == null);
 	}
 	
 	@Test 
