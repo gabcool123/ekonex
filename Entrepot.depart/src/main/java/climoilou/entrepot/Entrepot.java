@@ -31,15 +31,15 @@ public class Entrepot {
 	public static final int TAILLE_RANGEE = 5;
 	public static final String CHEMIN_DEFAUT = ".";
 	public static final char RANGEE_MIN = 'A';
+	
+
 	public static final char RANGEE_MAX = 'Z';
 	public static final int CAPACITE_MAX_SECTION_PETITE_ETAGERE = 50;
 	public static final String HISTORY_EXPEDITION_FILE_NAME = "expedition";
 	public static final String HISTORY_FILE_EXT = ".ser";
-	/*
-	 * public static final Character [] cle =
-	 * {RANGEE_MIN,'B','C','D','E','F','G','H','I','J','K','L','M','N',
-	 * 'O','P','Q','R','S','T','U','V','W','X','Y',RANGEE_MAX};
-	 */
+	
+	public static final Character CLE [] = {RANGEE_MIN,'B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y',RANGEE_MAX};
+	 
 
 	// list, stack, queue, deque, map, set,
 	// Les collections utilisées dans le projet d'entrepôt
@@ -55,7 +55,17 @@ public class Entrepot {
 		// ATTENTION: les section de la petite étagère (par nom de fabriquant)
 		// sont allouées au besoin (lazy).
 		super();
+		
+		
 		grandeEtageres = new EnumMap<TypeItem, Map<Character[], LinkedList<Item>>>(TypeItem.class);
+		Map<Character[], LinkedList<Item>> articleSport = new HashMap<Character[], LinkedList<Item>>();
+		Map<Character[], LinkedList<Item>> articleCamping = new HashMap<Character[], LinkedList<Item>>();
+		Map<Character[], LinkedList<Item>> vetements = new HashMap<Character[], LinkedList<Item>>();
+		articleSport.put(CLE, null);
+		articleCamping.put(CLE, null);
+		vetements.put(CLE, null);
+		
+		
 		surplus = new HashSet<Item>();
 		sectionDechargement = new LinkedList<Item>();
 		sectionExpedition = new LinkedList<Item>();
@@ -84,7 +94,7 @@ public class Entrepot {
 	public String expedie() {
 		String fileName = null;
 		int numFichier = 0;
-
+		
 		try {
 			fileName = ("%sytem root%\\Temp\\" + HISTORY_EXPEDITION_FILE_NAME + numFichier + HISTORY_FILE_EXT);
 			File file = new File(fileName);
@@ -269,6 +279,43 @@ public class Entrepot {
 
 		// TODO programmez cette méthode
 		return retSet;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((grandeEtageres == null) ? 0 : grandeEtageres.hashCode());
+		result = prime * result + ((petiteEtagere == null) ? 0 : petiteEtagere.hashCode());
+		result = prime * result + ((surplus == null) ? 0 : surplus.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Entrepot other = (Entrepot) obj;
+		if (grandeEtageres == null) {
+			if (other.grandeEtageres != null)
+				return false;
+		} else if (!grandeEtageres.equals(other.grandeEtageres))
+			return false;
+		if (petiteEtagere == null) {
+			if (other.petiteEtagere != null)
+				return false;
+		} else if (!petiteEtagere.equals(other.petiteEtagere))
+			return false;
+		if (surplus == null) {
+			if (other.surplus != null)
+				return false;
+		} else if (!surplus.equals(other.surplus))
+			return false;
+		return true;
 	}
 
 	// Uniquement pour les tests! ne pas utiliser ailleurs
